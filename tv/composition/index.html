@@ -39,6 +39,7 @@
     .decision{margin-top:58px;display:grid;grid-template-columns:repeat(3,1fr);gap:26px}.decision .card{min-height:310px}.stepno{color:var(--gold);font-size:30px;font-weight:900;letter-spacing:.12em}.decision h3{font-size:42px;line-height:1.1;margin:25px 0 14px}.decision p{font-size:28px;line-height:1.35;color:var(--muted);margin:0}
     .cover{display:grid;align-content:center}.tagrow{margin-top:54px;display:flex;gap:20px}.tag{padding:17px 22px;border:1px solid var(--line);border-radius:12px;font-size:29px;color:var(--muted)}
     .detail-hint{right:250px}
+    @media (pointer:coarse){body{touch-action:pan-y pinch-zoom}}
   </style>
 </head>
 <body>
@@ -337,7 +338,6 @@
   </section>
 
   <div class="slide-transition-line" id="transition-line"></div>
-  <div class="language-chip" id="language-chip">AZ</div>
   <aside class="detail-panel" id="detail-panel" aria-live="polite">
     <button id="detail-close" aria-label="Закрыть" style="position:absolute;right:20px;top:16px;border:0;background:transparent;color:#a8b8b0;font-size:30px;cursor:pointer">×</button>
     <div class="detail-kicker">Подробности</div>
@@ -430,14 +430,52 @@
     rootTimeline.seek(0);
     showScene(0);
 
-    let wheelMessageLocked = false;
+    let wheelDistance = 0;
+    let wheelReset = null;
     window.addEventListener("wheel", (event) => {
-      if (Math.abs(event.deltaY) < 18 || wheelMessageLocked) return;
+      const delta = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? innerHeight : 1);
+      if (!delta) return;
       event.preventDefault();
-      wheelMessageLocked = true;
-      parent.postMessage({ source: "knowledge-deck", type: "wheel-nav", direction: event.deltaY > 0 ? 1 : -1 }, "*");
-      setTimeout(() => { wheelMessageLocked = false; }, 560);
+      if (wheelDistance && Math.sign(wheelDistance) !== Math.sign(delta)) wheelDistance = 0;
+      wheelDistance += delta;
+      clearTimeout(wheelReset);
+      wheelReset = setTimeout(() => { wheelDistance = 0; }, 180);
+      if (Math.abs(wheelDistance) >= 30) {
+        parent.postMessage({ source: "knowledge-deck", type: "wheel-nav", direction: Math.sign(wheelDistance) }, "*");
+        wheelDistance = 0;
+      }
     }, { passive: false });
+
+    let slideTouch = null;
+    window.addEventListener("touchstart", (event) => {
+      if (event.touches.length !== 1) { slideTouch = null; return; }
+      const target = event.target instanceof Element ? event.target : null;
+      slideTouch = {
+        x: event.touches[0].clientX,
+        y: event.touches[0].clientY,
+        interactive: Boolean(target?.closest("a,button,input,textarea,select,[contenteditable],.interactive-card,#detail-panel")),
+        inDetail: Boolean(target?.closest("#detail-panel")),
+        touchControl: target?.closest(".interactive-card,#detail-close,#detail-panel a[href]") || null
+      };
+    }, { passive: true });
+    window.addEventListener("touchend", (event) => {
+      if (!slideTouch || !event.changedTouches.length) return;
+      const touch = event.changedTouches[0];
+      const dx = touch.clientX - slideTouch.x, dy = touch.clientY - slideTouch.y;
+      let direction = 0;
+      if (!slideTouch.inDetail && Math.abs(dx) > 80 && Math.abs(dx) > Math.abs(dy) * 1.3) direction = dx < 0 ? 1 : -1;
+      else if (slideTouch.touchControl && Math.hypot(dx, dy) < 40 && event.cancelable) {
+        event.preventDefault();
+        slideTouch.touchControl.click();
+      }
+      else if (!slideTouch.interactive && Math.hypot(dx, dy) < 40) {
+        if (slideTouch.x < innerWidth * .16) direction = -1;
+        else if (slideTouch.x > innerWidth * .84) direction = 1;
+      }
+      slideTouch = null;
+      if (direction) parent.postMessage({ source: "knowledge-deck", type: "touch-nav", direction }, "*");
+    }, { passive: false });
+    window.addEventListener("touchcancel", () => { slideTouch = null; }, { passive: true });
 
     function postTimeline() {
       parent.postMessage({

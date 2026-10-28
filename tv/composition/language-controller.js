@@ -84,7 +84,8 @@
     return leading + (translations[core] || core) + trailing;
   }
 
-  function applyLanguage(next) {
+  function applyLanguage(next, options = {}) {
+    if (next !== "az" && next !== "ru") return;
     language = next;
     textNodes().forEach((node) => {
       if (!originals.has(node)) originals.set(node, node.nodeValue);
@@ -103,9 +104,8 @@
       element.dataset.sourceLabel = language === "az" ? (translations[original.sourceLabel] || original.sourceLabel) : original.sourceLabel;
     });
     document.documentElement.lang = language;
-    const chip = document.querySelector("#language-chip");
-    if (chip) chip.textContent = language.toUpperCase();
-    parent.postMessage({ source: "knowledge-deck", type: "language", language }, "*");
+    document.dispatchEvent(new CustomEvent("deck-language-change", { detail: { language } }));
+    if (options.notify !== false) parent.postMessage({ source: "knowledge-deck", type: "language", language }, "*");
   }
 
   function toggleLanguage() {
@@ -118,8 +118,11 @@
     toggleLanguage();
   }, true);
   window.addEventListener("message", (event) => {
-    if (event.data?.source === "knowledge-deck" && event.data?.type === "toggle-language") toggleLanguage();
+    if (event.source !== parent || event.data?.source !== "knowledge-deck") return;
+    if (event.data.type === "toggle-language") toggleLanguage();
+    if (event.data.type === "set-language") applyLanguage(event.data.language);
   });
   window.deckLanguage = { toggle: toggleLanguage, set: applyLanguage, get: () => language };
-  applyLanguage("az");
+  applyLanguage("az", { notify: false });
+  parent.postMessage({ source: "knowledge-deck", type: "language-ready" }, "*");
 })();

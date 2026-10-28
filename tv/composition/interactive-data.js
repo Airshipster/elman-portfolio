@@ -249,6 +249,11 @@ function closeDetail(force = false) {
   gsap.to(detailPanel, { opacity: 0, y: 18, scale: .97, duration: .18, ease: "power2.in", overwrite: true, onComplete: () => detailPanel.classList.remove("is-open") });
 }
 
+document.addEventListener("deck-language-change", () => {
+  const card = lockedCard || document.querySelector(".interactive-card:hover");
+  if (card && detailPanel.classList.contains("is-open")) openDetail(card);
+});
+
 document.querySelectorAll(".interactive-card").forEach((element) => {
   element.addEventListener("mouseenter", () => { if (!lockedCard) openDetail(element); });
   element.addEventListener("mouseleave", () => closeDetail());
