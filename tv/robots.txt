@@ -1,0 +1,3 @@
+# Pages and resources are crawlable so their X-Robots-Tag can be read.
+User-agent: *
+Allow: /

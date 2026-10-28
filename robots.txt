@@ -1,6 +1,14 @@
 # HTML remains crawlable so search engines can read its noindex directive.
-# Every published HTML document carries noindex, nofollow, nosnippet,
-# noarchive and noimageindex in its static head, before JavaScript runs.
+# Every published HTML document carries noindex in its static head.
 User-agent: *
 Allow: /
 Disallow: /assets/
+Disallow: /tv/composition/assets/
+Disallow: /tv/robots.txt
+Disallow: /*.js
+Disallow: /*.css
+Disallow: /*.ttf
+Disallow: /*.woff
+Disallow: /*.png
+Disallow: /*.jpg
+Disallow: /*.svg
