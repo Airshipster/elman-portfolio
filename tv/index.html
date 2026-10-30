@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <title>Bilik telekanalı — işçi versiya</title>
+  <script>
+    (() => {
+      const alias = location.hostname === "tv.elman.digital" && location.pathname.match(/^\/(ru|az)\/?$/i);
+      if (!alias) return;
+      const parts = location.search.slice(1).split("&").filter(Boolean);
+      if (!parts.some((part) => ["az", "ru", "lang"].includes(part.split("=", 1)[0].toLowerCase()))) parts.unshift(alias[1].toLowerCase());
+      history.replaceState(history.state, "", `/${parts.length ? `?${parts.join("&")}` : ""}${location.hash}`);
+    })();
+  </script>
+  <script src="vendor/hyperframes-player.global.js"></script>
+  <script src="vendor/hyperframes-slideshow.global.js"></script>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{width:100%;height:100%;overflow:hidden;background:#07110f}
+    hyperframes-slideshow{display:block;position:relative;width:100vw;height:100vh;outline:none}
+    hyperframes-player{position:absolute;inset:0}
+    .language-control{position:fixed;top:max(12px,env(safe-area-inset-top));right:max(16px,env(safe-area-inset-right));z-index:200;min-width:44px;min-height:44px;padding:0;border:1px solid rgba(246,241,231,.15);border-radius:999px;background:rgba(7,17,15,.88);color:#33d7cf;font:600 14px/1 "Segoe UI",Arial,sans-serif;letter-spacing:.04em;cursor:pointer}
+    .language-control:focus-visible{outline:2px solid #33d7cf;outline-offset:-3px}
+  </style>
+</head>
+<body>
+  <hyperframes-slideshow tabindex="0" notes-storage-key="azerbaijan-knowledge-tv-draft">
+    <hyperframes-player interactive src="composition/index.html?v=20261028-2"></hyperframes-player>
+    <script type="application/hyperframes-slideshow+json">
+    {
+      "slides":[
+        {"sceneId":"s01","notes":"Сразу назвать предложение: общедоступный телеканал о знаниях на азербайджанском языке. Это рабочая концепция, название можно поменять."},
+        {"sceneId":"s02","notes":"Коротко объяснить, почему именно я принёс проект. Здесь нужны портрет, реальные проекты, публикации и фотографии выступлений."},
+        {"sceneId":"s03","notes":"Показать, что у проекта уже есть база для поиска тем, форматов и потенциальных партнёров. Не называть субтитры готовыми сценариями."},
+        {"sceneId":"s04","notes":"Упомянуть внешнее влияние коротко: зависимость от чужих площадок означает зависимость и от чужой повестки. Не превращать этот фрагмент в отдельное расследование."},
+        {"sceneId":"s05iq","notes":"Оговорить прямо: IQ-тест не измеряет «ум народа», а онлайн-выборка не репрезентативна. Но внутри одной и той же процедуры Азербайджан занимает 57-е место, ниже Грузии и Армении."},
+        {"sceneId":"s05","notes":"Сравнить Азербайджан с лидером и средним OECD, без отдельного акцента на Армении."},
+        {"sceneId":"s05b","notes":"Показать долю школьников ниже базового уровня и почти отсутствующую верхнюю группу."},
+        {"sceneId":"s05c","notes":"12,4 года формального обучения превращаются в 8,3 года обучения с поправкой на результат."},
+        {"sceneId":"s05d","notes":"Разрыв по доходу семьи и месту проживания показывает силу среды."},
+        {"sceneId":"s05e","notes":"В инновационном индексе результат заметно слабее созданных условий."},
+        {"sceneId":"s05f","notes":"Сопоставление образовательного капитала со знакомыми странами; ни одну соседнюю страну специально не выделять."},
+        {"sceneId":"s06","notes":"Здесь находится конкретная работа Министерства культуры: язык, местные герои, наследие, документалистика и новые медиапрофессии."},
+        {"sceneId":"s07","notes":"Главная мысль проекта: современный мир должен регулярно объясняться на азербайджанском языке своими редакциями и авторами."},
+        {"sceneId":"s08","notes":"Канал шире естественных наук. В него входят город, архитектура, технологии, история, профессии и проверка утверждений."},
+        {"sceneId":"s09","notes":"Показать размах: это десятки повторяемых рубрик, а не перечень школьных предметов и не восемь общих жанров."},
+        {"sceneId":"s10","notes":"Шесть примеров показывают двигатель выпуска: что происходит на экране и почему зритель досматривает."},
+        {"sceneId":"s11","notes":"Это редакционная карта утверждений, на которые канал должен отвечать. Она не утверждает, сколько жителей верит в каждый миф."},
+        {"sceneId":"s12","notes":"Часть эфира можно запускать через лицензирование и адаптацию. Права на каждый материал согласуются отдельно."},
+        {"sceneId":"s13","notes":"Образование отвечает за содержание и связь с обучением. Культура — за язык, форму, авторов, наследие и производство."},
+        {"sceneId":"s14","notes":"Просим не очередное исследование. Нужно согласовать концепцию и дать совместное поручение на подготовку запуска с понятным следующим решением."}
+      ],
+      "slideSequences":[]
+    }
+    </script>
+  </hyperframes-slideshow>
+  <button type="button" id="language-toggle" class="language-control" aria-label="Azərbaycan dili. Русский язык">AZ</button>
+  <script>
+    const deck = document.querySelector("hyperframes-slideshow");
+    const player = document.querySelector("hyperframes-player");
+    const languageControl = document.querySelector("#language-toggle");
+    const languageChannel = typeof BroadcastChannel === "function" ? new BroadcastChannel(`knowledge-tv-language:${location.pathname}`) : null;
+    const isAudience = new URLSearchParams(location.search).get("mode") === "audience";
+    let desiredLanguage = languageFromUrl();
+    let languageReady = false;
+
+    function languageFromUrl() {
+      const params = new URLSearchParams(location.search);
+      if (params.has("ru")) return "ru";
+      if (params.has("az")) return "az";
+      if (["ru", "az"].includes(params.get("lang"))) return params.get("lang");
+      return /\/(?:ru)\/?$/i.test(location.pathname) ? "ru" : "az";
+    }
+    function updateLanguageUrl(language) {
+      const params = location.search.slice(1).split("&").filter(Boolean);
+      const key = (entry) => entry.split("=", 1)[0].toLowerCase();
+      const rest = params.filter((entry) => !["ru", "az", "lang"].includes(key(entry)));
+      rest.unshift(language);
+      const next = location.pathname + (rest.length ? `?${rest.join("&")}` : "") + location.hash;
+      if (next !== location.pathname + location.search + location.hash) history.replaceState(history.state, "", next);
+    }
+    function sendLanguage(language) {
+      player.iframeElement?.contentWindow?.postMessage({ source: "knowledge-deck", type: "set-language", language }, "*");
+    }
+    function setLanguage(language, options = {}) {
+      if (!["az", "ru"].includes(language)) return;
+      const changed = desiredLanguage !== language;
+      desiredLanguage = language;
+      document.documentElement.lang = language;
+      document.title = language === "az" ? "Bilik telekanalı — işçi versiya" : "Телеканал о знаниях — рабочий черновик";
+      languageControl.textContent = language.toUpperCase();
+      languageControl.setAttribute("aria-label", language === "az" ? "Azərbaycan dili. Переключить на русский" : "Русский язык. Azərbaycan dilinə keç");
+      languageControl.title = language === "az" ? "Русский язык" : "Azərbaycan dili";
+      updateLanguageUrl(language);
+      if (options.send !== false && languageReady) sendLanguage(language);
+      if (changed && options.broadcast !== false && !isAudience) languageChannel?.postMessage({ type: "language", language });
+    }
+    languageControl.addEventListener("click", (event) => {
+      setLanguage(desiredLanguage === "az" ? "ru" : "az");
+      if (event.detail > 0) deck.focus({ preventScroll: true });
+    });
+    languageChannel?.addEventListener("message", (event) => {
+      if (isAudience && event.data?.type === "language") setLanguage(event.data.language, { broadcast: false });
+    });
+    window.addEventListener("popstate", () => setLanguage(languageFromUrl()));
+    setLanguage(desiredLanguage, { send: false, broadcast: false });
+    deck.focus();
+    let wheelLocked = false;
+    function moveByWheel(direction) {
+      if (wheelLocked || !deck.controller) return;
+      wheelLocked = true;
+      direction > 0 ? deck.controller.next() : deck.controller.prev();
+      setTimeout(() => { wheelLocked = false; }, 560);
+    }
+    let wheelDistance = 0;
+    let wheelReset = null;
+    window.addEventListener("wheel", (event) => {
+      const delta = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? innerHeight : 1);
+      if (!delta) return;
+      event.preventDefault();
+      if (wheelDistance && Math.sign(wheelDistance) !== Math.sign(delta)) wheelDistance = 0;
+      wheelDistance += delta;
+      clearTimeout(wheelReset);
+      wheelReset = setTimeout(() => { wheelDistance = 0; }, 180);
+      if (Math.abs(wheelDistance) >= 30) {
+        moveByWheel(wheelDistance);
+        wheelDistance = 0;
+      }
+    }, { passive: false });
+    window.addEventListener("message", (event) => {
+      if (event.source !== player.iframeElement?.contentWindow || event.data?.source !== "knowledge-deck") return;
+      if (event.data.type === "wheel-nav" || event.data.type === "touch-nav") moveByWheel(event.data.direction);
+      if (event.data.type === "language-ready") { languageReady = true; sendLanguage(desiredLanguage); }
+      if (event.data.type === "language" && languageReady) setLanguage(event.data.language, { send: false });
+    });
+    window.addEventListener("keydown", (event) => {
+      if (event.code !== "KeyM" || event.ctrlKey || event.metaKey || event.altKey || event.repeat) return;
+      event.preventDefault();
+      setLanguage(desiredLanguage === "az" ? "ru" : "az");
+    }, true);
+    let outerTouch = null;
+    window.addEventListener("touchstart", (event) => {
+      if (event.touches.length !== 1 || event.target.closest("button,a,input,textarea,select,[contenteditable]")) { outerTouch = null; return; }
+      outerTouch = { x: event.touches[0].clientX, y: event.touches[0].clientY };
+    }, { passive: true });
+    window.addEventListener("touchend", (event) => {
+      if (!outerTouch || !event.changedTouches.length) return;
+      const touch = event.changedTouches[0];
+      const dx = touch.clientX - outerTouch.x, dy = touch.clientY - outerTouch.y;
+      if (Math.hypot(dx, dy) < 20) {
+        if (outerTouch.x < innerWidth * .16) moveByWheel(-1);
+        else if (outerTouch.x > innerWidth * .84) moveByWheel(1);
+      }
+      outerTouch = null;
+    }, { passive: true });
+  </script>
+</body>
+</html>
