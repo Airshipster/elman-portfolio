@@ -3,8 +3,6 @@
 User-agent: *
 Allow: /
 Disallow: /assets/
-Disallow: /tv/composition/assets/
-Disallow: /tv/robots.txt
 Disallow: /*.js
 Disallow: /*.css
 Disallow: /*.ttf
